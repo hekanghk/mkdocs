@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>11.flutter - Vue学习笔记</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "11.flutter";
+    var mkdocs_page_input_path = "vue\u7b14\u8bb0/11.flutter.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Vue学习笔记</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../01.%E6%8F%92%E6%A7%BD/">测试1</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../04.%E4%B8%B4%E6%97%B6/">测试2</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Vue学习笔记</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>11.flutter</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h3 id="flutter">flutter</h3>
+<ul>
+<li>
+<p>flutter是一个UI SDK</p>
+</li>
+<li>
+<p>大前端（三端）：移动  web  桌面</p>
+</li>
+<li>传统的前端单指web端</li>
+<li>flutter有统一大前端的趋势，在侵蚀原生的iOS/android开发</li>
+<li>flutter的优点：</li>
+<li>flutter内置material语言</li>
+<li>快速：UI渲染速度很快</li>
+<li>开发起来高效：只需要开发一套代码，多平台部署</li>
+<li>flutter开源</li>
+<li>支持热重载</li>
+<li>跨平台历史：webview    react native     </li>
+</ul>
+<h4 id="_1">开发流程</h4>
+<p>原生安卓开发：</p>
+<ol>
+<li>java开发app</li>
+<li>android框架翻译代码</li>
+<li>通过skia引擎为cpu/gpu提供数据</li>
+<li>gpu渲染后显示</li>
+</ol>
+<p>相比之下：RN：</p>
+<ol>
+<li>js  css  redux等开发app通过js VM 等等 ，这一步性能消耗很大。</li>
+</ol>
+<p>flutter性能高于安卓开发，是因为更新时skia能保持最新</p>
+<h3 id="flutter_1">flutter原理：</h3>
+<h4 id="_2">图像是如何显示出来的</h4>
+<ul>
+<li>
+<p>每秒16帧，人眼就感到流畅</p>
+</li>
+<li>
+<p>帧率和刷新率的不同：帧率指生产一帧，刷新率指的是屏幕显示一帧</p>
+</li>
+<li>
+<p>Skia为GPU提供数据，GPU负责绘制图像，绘制后，将数据放入Buffer中。显示器在刷新时，从buffer中取出图像，显示在屏幕上。这是一个典型的生产者-消费者模型。由GPU生产，屏幕显示（消费）</p>
+</li>
+<li>
+<p>double buffer 双重缓存。back buffer（GPU写入的目标）和frame buffer（显示器读取的来源）。</p>
+</li>
+<li>
+<p>两个缓存间通过VSync信号配合。VSync做两件事：1.在一个屏幕刷新周期完成，产生VSync信号，将生产出的图像复制。2.在显示器显示完成后，VSync通知GPU绘制下一张图像</p>
+</li>
+<li>
+<p>Jank：画面停顿，甚至产生空白。双重缓存很容易出现这个现象。</p>
+</li>
+<li>
+<p>三重缓存：多缓存一个buffer来备用，防止jank的产生</p>
+</li>
+</ul>
+<hr />
+<h4 id="skia">渲染引擎skia</h4>
+<ul>
+<li>
+<p>作用：<strong>为GPU提供数据</strong></p>
+</li>
+<li>
+<p>Skia是flutter向GPU提供数据的途径。是一个C++写的开源图形库</p>
+</li>
+<li>安卓官方的<strong>图像渲染引擎</strong>是skia，所以ios的包会大一些 </li>
+</ul>
+<h4 id="flutter_2">flutter性能高在哪？</h4>
+<ul>
+<li>渲染闭环（循环点是vsync通知gpu开始下一轮循环）</li>
+<li>相比之下，RN还需要js虚拟机/桥接/原生等过程</li>
+<li>flutter和rn的本质区别在于，rn是通过android和ios的系统组件进行渲染，而flutter是自己完成了组件的渲染。</li>
+</ul>
+<h4 id="flutter_3">flutter开发一般过程</h4>
+<ol>
+<li>下载flutter的sdk</li>
+<li>配置flutter的环境变量  export PATH=$PATH:/flutter目录/bin</li>
+<li>dart的环境变量</li>
+<li>flutter create hello flutter</li>
+<li>
+<p>配置ios/android模拟器：Xcode和Android Studio（flutter项目是要跑在模拟器上面的）</p>
+</li>
+<li>
+<p>配置镜像（更换国内的安装源）</p>
+</li>
+</ol>
+              
+            </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

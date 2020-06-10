@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Webpack - Vue学习笔记</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Webpack";
+    var mkdocs_page_input_path = "vue\u7b14\u8bb0/webpack.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Vue学习笔记</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../01.%E6%8F%92%E6%A7%BD/">测试1</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../04.%E4%B8%B4%E6%97%B6/">测试2</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Vue学习笔记</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Webpack</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h3 id="webpack">webpack</h3>
+<h4 id="_1">优点：</h4>
+<p>可处理模块间的关系网 </p>
+<h4 id="_2">依赖关系：</h4>
+<p>webpack依赖于<strong>node环境</strong>，node环境为了可以正常执行代码，必须依赖各种包，所以有了<strong>npm工具</strong>，用来管理node环境下的各种包</p>
+<h4 id="webpack_1">安装webpack</h4>
+<p>node -v 查看node版本</p>
+<p>npm install webapck -g （-g表示全局安装，这样在很多地方都可以用了）</p>
+<hr />
+<h4 id="webpack_2">简单打包（直接通过webpack打包）</h4>
+<ol>
+<li>
+<p>在web pack.config.js中配置要打包的默认文件路径</p>
+</li>
+<li>
+<p>配置webpack</p>
+</li>
+</ol>
+<p>npm init 生成package.json</p>
+<p>npm install补全需要的东西</p>
+<ul>
+<li>在webpack.config.js中补全路径</li>
+</ul>
+<hr />
+<ul>
+<li>映射：将webpack映射为npm run build</li>
+<li>项目一般都有自己的webpack包，而不是全局的，因为项目的和全局的版本很可能不一样。</li>
+<li>只要在cmd中直接敲命令，一定是全局的。要本地的一定要输包在本地安装的路径。上面映射以后的是本地的，这是映射的另一个好处。</li>
+<li>开发时依赖（devDependencies）：webpack就属于开发时依赖，因为运行不需要webpack</li>
+<li>运行时依赖(dependencies)</li>
+</ul>
+<hr />
+<ul>
+<li>
+<p>web pack.config.js：是自己新建的<strong>配置文件</strong>，用来简化打包步骤，就不用写路径了</p>
+</li>
+<li>
+<p>package.json：是用npm init来创建的。用node环境就需要目录中生成这个文件。此外，可以将npm run后跟的命令映射进来。package.json中的script脚本在执行时，会优先在本地的node_modules/.bin下找对应的命令。</p>
+</li>
+<li>
+<p>node_modules：通过webpack本地安装的命令来安装ys</p>
+</li>
+<li>
+<p>npm install：用来根据package.json的信息安装需要的东西</p>
+</li>
+</ul>
+<hr />
+<h4 id="loader">loader</h4>
+<ul>
+<li>
+<p>css打包</p>
+</li>
+<li>
+<p>安装：去官网安装css-loader</p>
+</li>
+<li>配置：在配置文件中配置好css-loader</li>
+</ul>
+<p>css-loader负责将css文件加载</p>
+<p>style-loader负责将样式添加到dom中</p>
+<h4 id="less">less</h4>
+<ul>
+<li>less-loader 用来加载</li>
+<li>less 用来将less文件转化为css</li>
+</ul>
+<h4 id="_3">图片</h4>
+<ul>
+<li>当小于limit时，就会自动转换为base64格式  </li>
+<li>大于limit时，需要使用file-loader模块进行加载 ，这时会将图片拷贝到dist文件夹中，并改为哈希值来命名，以防止重复。</li>
+</ul>
+<hr />
+<ul>
+<li>npm安装时，如果用--save -dev，会将插件写入package.json的devDependencies对象中，如果只是--save，则会写入dependencies中</li>
+<li>runtime-only  代码中不能有template。因为它不包含编译template的代码</li>
+<li>runtime-compiler 代码中，可以有template，因为有compiler来编译template  </li>
+<li>template优先于el，可以将其替换掉</li>
+<li>App.vue为根，组成组件树</li>
+</ul>
+<h4 id="plugin">plugin</h4>
+<ul>
+<li>loader用来转换某些类型的模块</li>
+<li>
+<p>plugin是插件，对webpack本身的扩展</p>
+</li>
+<li>
+<p>加版权声明</p>
+</li>
+<li>
+<p>MIT License 一种版权协议</p>
+</li>
+<li>
+<p>在web pack.config.js中添加</p>
+</li>
+</ul>
+<p><code>plugins:[
+      new webpack.BannerPlugin('最终版权归属何康所有')
+  ]</code></p>
+<ol>
+<li>
+<p>HtmlWebpackPlugin  自动生成index.html，并可将bundie.js自动导入</p>
+</li>
+<li>
+<p>项目发布前，压缩开发文件大小（’丑化‘）的包</p>
+</li>
+</ol>
+<h4 id="node">搭建本地node服务器</h4>
+<ul>
+<li>webpack-dev-server：是一个node服务器。用于在本地服务器中测试。测试完成后，打包就行了。</li>
+<li>安装时，因为没有加-g，所以是全局安装的。所以需要在package.json中加上alias，从而局部使用。</li>
+</ul>
+<hr />
+<ul>
+<li>将配置文件进行分离：webpackMerge插件</li>
+<li>configuration file 配置文件</li>
+</ul>
+<hr />
+<ul>
+<li>
+<p>commonJS：require 和 module.exports</p>
+</li>
+<li>
+<p>ES6: import 和 export</p>
+</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
