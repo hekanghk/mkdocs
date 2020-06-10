@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>09.CLI - Vue学习笔记</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "09.CLI";
+    var mkdocs_page_input_path = "vue\u7b14\u8bb0/09.CLI.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Vue学习笔记</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../01.%E6%8F%92%E6%A7%BD/">测试1</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../04.%E4%B8%B4%E6%97%B6/">测试2</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Vue学习笔记</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>09.CLI</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h4 id="runtime-compilerruntime-only">runtime-compiler和runtime-only</h4>
+<ul>
+<li>compiler需要注册并在template中调用</li>
+<li>runtime-only性能更高，因为步骤更少，直接通过render函数，所以代码量也更少；所以更常用runtime-only</li>
+</ul>
+<h4 id="vue">Vue程序运行的过程</h4>
+<ol>
+<li>将template解析为ast(抽象语法树 abstract syntax tree)</li>
+<li>编译为render函数</li>
+<li>通过render函数，渲染出dom节点，并形成virtual dom树</li>
+</ol>
+<p>template -&gt; ast -&gt; render -&gt;virtual dom -&gt; 真实dom(UI)</p>
+<h4 id="render">render函数</h4>
+<p>createElement用法：</p>
+<ol>
+<li>
+<p>createElement('标签'， {标签的属性}， ['标签的内容'])</p>
+</li>
+<li>
+<p>可以将组件作为参数传入，这样就省去了template编译的过程。</p>
+</li>
+</ol>
+<p>vue-template-compiler依赖可以将.vue文件中的template转换为render函数。所以.vue组件导入时，里面已经不存在template了，而是render函数了。</p>
+<h3 id="_1">目录结构</h3>
+<ul>
+<li>build和config文件夹都是配置文件。区别是build是各种包，config是一些基础的变量，如端口，是否自动打开浏览器等。</li>
+<li>node直接执行.js文件：不用依赖于index.html和浏览器了。直接node build.js就能执行了。</li>
+<li>v8可以直接将js翻译为二进制代码，所以它很快。v8开源的，所以火狐等有参考，现代浏览器的差距也不大了</li>
+<li>看目录结构，先看package.json。package中build.js，其中通过webpack来加载配置文件，而配置文件是从prod.conf导入的，prod.conf中做了base和prod的合并</li>
+<li>webpack.prod.conf.js中，将base配置和prod的自定义配置相merge</li>
+</ul>
+<h3 id="_2">文件/文件夹作用</h3>
+<ul>
+<li>.editconfig文件，是设定代码的统一风格，如缩进多少个空格</li>
+<li>package lock作用是记录module中真实安装的包</li>
+<li>static中的东西不会压缩，而是原封拷贝到dist中</li>
+<li>babelrc：转换es5es</li>
+</ul>
+<h4 id="vue-ui">vue-ui</h4>
+<ul>
+<li>命令：vue ui</li>
+</ul>
+<h3 id="_3">插件和依赖：</h3>
+<p>分不清</p>
+<ul>
+<li>axios是一个框架</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
