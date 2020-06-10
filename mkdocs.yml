@@ -1,7 +1,7 @@
 site_name: Vue学习笔记
 
 pages:
- - 测试1: 01.插槽.md
- - 测试2: 04.临时.md
-
+ - 测试1: 01.md
+ - 测试2: 04.md
+ - 测试3: index.md
 theme: readthedocs
